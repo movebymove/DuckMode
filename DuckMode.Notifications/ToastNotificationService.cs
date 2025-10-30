@@ -21,6 +21,15 @@ public class ToastNotificationService : INotificationService
             System.Windows.Forms.MessageBoxIcon.Information);
         return result == System.Windows.Forms.DialogResult.Yes ? WaterBreakAction.Snooze15 : WaterBreakAction.Dismiss;
     }
+
+    public void ShowMoveBreak()
+    {
+        System.Windows.Forms.MessageBox.Show(
+            "Đến giờ vận động nhẹ! Đứng lên đi lại, duỗi cơ một chút nhé.",
+            "DuckMode",
+            System.Windows.Forms.MessageBoxButtons.OK,
+            System.Windows.Forms.MessageBoxIcon.Information);
+    }
 }
 
 

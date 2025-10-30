@@ -44,6 +44,19 @@ public class ReminderScheduler : IReminderScheduler, IDisposable
         // Future: implement
     }
 
+    public void ScheduleWaterBreak(int intervalMinutes)
+    {
+        _breakMinutes = Math.Max(10, intervalMinutes);
+        _nextBreakAt = DateTime.Now.AddMinutes(_breakMinutes);
+        _nextIsMoveBreak = false;
+    }
+
+    public void ScheduleWaterBreakAt(DateTime when)
+    {
+        _nextBreakAt = when;
+        _nextIsMoveBreak = false;
+    }
+
     public void ScheduleBreaks(int intervalMinutes)
     {
         _breakMinutes = Math.Max(10, intervalMinutes);
