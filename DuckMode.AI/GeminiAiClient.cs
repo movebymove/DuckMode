@@ -13,7 +13,25 @@ public class GeminiAiClient : IAiClient
 {
     // Đọc API key từ biến môi trường để tránh lộ key trong repo công khai
     // Set env var: GEMINI_API_KEY
-    private static string? ApiKey => Environment.GetEnvironmentVariable("GEMINI_API_KEY");
+    private static string? ApiKey
+    {
+        get
+        {
+            var env = Environment.GetEnvironmentVariable("GEMINI_API_KEY");
+            if (!string.IsNullOrWhiteSpace(env)) return env;
+            try
+            {
+                var p = System.IO.Path.Combine(AppContext.BaseDirectory, "gemini.key");
+                if (System.IO.File.Exists(p))
+                {
+                    var firstLine = System.IO.File.ReadLines(p).FirstOrDefault();
+                    if (!string.IsNullOrWhiteSpace(firstLine)) return firstLine.Trim();
+                }
+            }
+            catch { }
+            return null;
+        }
+    }
     private const string ApiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
 
     public async Task<AiResponse> ChatAsync(IEnumerable<AiMessage> history, CancellationToken cancellationToken)
