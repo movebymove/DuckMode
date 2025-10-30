@@ -11,8 +11,7 @@ namespace DuckMode.AI;
 
 public class GeminiAiClient : IAiClient
 {
-    // Đọc API key từ biến môi trường để tránh lộ key trong repo công khai
-    // Set env var: GEMINI_API_KEY
+    // API key lookup order: env var -> gemini.key -> gemini.key.example (first non-comment line)
     private static string? ApiKey
     {
         get
@@ -26,6 +25,14 @@ public class GeminiAiClient : IAiClient
                 {
                     var firstLine = System.IO.File.ReadLines(p).FirstOrDefault();
                     if (!string.IsNullOrWhiteSpace(firstLine)) return firstLine.Trim();
+                }
+                var pe = System.IO.Path.Combine(AppContext.BaseDirectory, "gemini.key.example");
+                if (System.IO.File.Exists(pe))
+                {
+                    var firstNonComment = System.IO.File.ReadLines(pe)
+                        .Select(l => l.Trim())
+                        .FirstOrDefault(l => !string.IsNullOrWhiteSpace(l) && !l.StartsWith("#"));
+                    if (!string.IsNullOrWhiteSpace(firstNonComment)) return firstNonComment;
                 }
             }
             catch { }

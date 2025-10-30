@@ -44,6 +44,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="gemini.key.example">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DuckMode.Core\DuckMode.Core.csproj" />
     <ProjectReference Include="..\DuckMode.Data\DuckMode.Data.csproj" />
     <ProjectReference Include="..\DuckMode.Scheduler\DuckMode.Scheduler.csproj" />

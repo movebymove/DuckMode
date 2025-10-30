@@ -7,3 +7,4 @@ obj/
 *.log 
 *.db 
 DuckMode.App/Assets/psyduck_logo.png
+DuckMode.App/gemini.key
