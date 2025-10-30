@@ -1,0 +1,72 @@
+﻿<Window x:Class="DuckMode.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="DuckMode" Height="380" Width="340" WindowStyle="None" ResizeMode="NoResize" Topmost="True" Background="Transparent" AllowsTransparency="True" Icon="Assets/054.ico">
+    <Grid>
+        <Border CornerRadius="12" Padding="0" Background="#FFD700" BorderThickness="2" BorderBrush="#FFA500">
+            <DockPanel LastChildFill="True">
+                <!-- Title bar with minimize button -->
+                <Border DockPanel.Dock="Top" Background="#FFA500" Height="32" CornerRadius="12,12,0,0" MouseDown="TitleBar_MouseDown">
+                    <Grid>
+                        <TextBlock Text="DuckMode" VerticalAlignment="Center" Margin="8,0,0,0" Foreground="White" FontWeight="Bold"/>
+                        <Button x:Name="MinimizeButton" Content="─" HorizontalAlignment="Right" Width="32" Height="32"
+                                Background="Transparent" BorderThickness="0" Foreground="White" FontSize="16" FontWeight="Bold"
+                                Click="MinimizeButton_Click"/>
+                    </Grid>
+                </Border>
+
+                <!-- Input area -->
+                <Border DockPanel.Dock="Bottom" Background="White" CornerRadius="0,0,10,10" Padding="8" Height="60">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="InputBox" Grid.Column="0" Height="36" VerticalContentAlignment="Center"
+                                 Padding="8,0" Margin="0,0,8,0" BorderBrush="#FFA500" BorderThickness="2"
+                                 Background="#FAFAFA" FontSize="14" KeyDown="InputBox_KeyDown" VerticalAlignment="Center"/>
+                        <Border Grid.Column="1" CornerRadius="4" Background="#FF8C00" VerticalAlignment="Center">
+                            <Button x:Name="SendButton" Content="Gửi" Width="70" Height="36"
+                                    Background="Transparent" Foreground="White" BorderThickness="0"
+                                    FontWeight="Bold" FontSize="13"
+                                    Click="SendButton_Click"/>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <!-- Chat area (fills remaining space) -->
+                <Border Margin="8" Background="White" CornerRadius="8" BorderThickness="1" BorderBrush="#E0E0E0">
+                    <ScrollViewer x:Name="ChatScrollViewer" VerticalScrollBarVisibility="Auto" Padding="8">
+                        <ItemsControl x:Name="MessagesList">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="0,8,0,0" Padding="8" Background="{Binding Background}" CornerRadius="6">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Sender}" FontWeight="Bold" FontSize="12"
+                                                       Foreground="{Binding SenderColor}" Margin="0,0,0,4"/>
+                                            <TextBox Text="{Binding Content}" TextWrapping="Wrap"
+                                                     Foreground="#333" FontSize="13"
+                                                     IsReadOnly="True" Background="Transparent" BorderThickness="0"
+                                                     Padding="0" IsReadOnlyCaretVisible="False">
+                                                <TextBox.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem Command="Copy" Header="Copy"/>
+                                                    </ContextMenu>
+                                                </TextBox.ContextMenu>
+                                            </TextBox>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Border>
+            </DockPanel>
+        </Border>
+        <Image x:Name="PsyduckRunner" Source="psyduck_run.png" Width="54" Height="54" VerticalAlignment="Top" Margin="0,-12,0,0" Panel.ZIndex="10" RenderTransformOrigin="0.5,0.5">
+            <Image.RenderTransform>
+                <TranslateTransform x:Name="PsyduckRunTransform"/>
+            </Image.RenderTransform>
+        </Image>
+    </Grid>
+</Window>
